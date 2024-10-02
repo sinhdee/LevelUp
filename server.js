@@ -44,7 +44,7 @@ app.get("/codstats/new", (req,res) => {
 app.get("/codStats/:id", async (req, res) => {
   try {
     const foundCodStat = await codStat.findById(req.params.id);
-    const contextData = { sonnyangel: foundSonnyAngel };
+    const contextData = { codStat: foundCodStat };
     res.render("codStats/show", contextData);
   } catch (err) {
     console.log(err);
