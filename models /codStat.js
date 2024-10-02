@@ -1,14 +1,15 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-//Schema 
+// Schema
 const codStatsSchema = new mongoose.Schema({
-    Kills: Number,
-    Deaths: Number,
-    Assists: Number, 
-    WinLose: Boolean,
-    Rank: String
-})
+    kills: { type: Number, required: true },
+    deaths: { type: Number, required: true },
+    assists: { type: Number, required: true },
+    winLose: { type: Boolean, required: true },
+    rank: { type: String, required: true }
+});
 
-const codStat = mongoose.model("codStat", codStatsSchema)
+// Model
+const codStat = mongoose.model('codStat', codStatsSchema);
 
-module.exports = mongoose.model("codStat",codStatsSchema)
+module.exports = codStat;
