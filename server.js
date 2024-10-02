@@ -32,7 +32,18 @@ app.get("/", (req,res) => {
   res.render("index");
 });
 //Render New Page 
-app.get("codstats/new", (req,res) => {
+app.get("/codstats/new", (req,res) => {
   res.render("codstats/new");
 });
 
+//Show Route 
+app.get("/codStats/:id", async (req, res) => {
+  try {
+    const foundCodStat = await codStat.findById(req.params.id);
+    const contextData = { sonnyangel: foundSonnyAngel };
+    res.render("codStats/show", contextData);
+  } catch (err) {
+    console.log(err);
+    res.redirect("/");
+  }
+});
