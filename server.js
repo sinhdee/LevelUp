@@ -11,14 +11,19 @@ app.set("views", path.join(__dirname, "views"));
 
 
 
+
 // Set the port from environment variable or default to 3000
-const port = process.env.PORT ? process.env.PORT : "3000";
+const port = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
+
+mongoose.connection.on("error", (err) => {
+  console.log(err)
+})
 
 // Middleware to parse URL-encoded data from forms
 app.use(express.urlencoded({ extended: false }));
@@ -37,8 +42,8 @@ app.get("/", (req,res) => {
   res.render("index");
 });
 //Render New Page 
-app.get("/codstats/new", (req,res) => {
-  res.render("codstats/new");
+app.get("/codStats/new", (req,res) => {
+  res.render("codStats/new");
 });
 
 //Show Route 
