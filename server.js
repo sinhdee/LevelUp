@@ -31,3 +31,8 @@ app.listen(port, () => {
 app.get("/", (req,res) => {
   res.render("index");
 });
+//Render New Page 
+app.get("codstats/new", (req,res) => {
+  res.render("codstats/new");
+});
+
