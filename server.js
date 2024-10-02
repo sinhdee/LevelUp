@@ -30,3 +30,8 @@ app.use(morgan('dev'));
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
 });
+
+//Landing Page 
+app.get("/", (req,res) => {
+  res.render("index");
+});
