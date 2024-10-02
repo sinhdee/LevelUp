@@ -6,6 +6,10 @@ const app = express();
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
+const path = require('path');
+app.set("views", path.join(__dirname, "views"));
+
+
 
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT ? process.env.PORT : "3000";
@@ -22,7 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
-
+//Set view engine 
+app.set('view engine', 'ejs');
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
 });
@@ -46,4 +51,27 @@ app.get("/codStats/:id", async (req, res) => {
     console.log(err);
     res.redirect("/");
   }
+});
+
+//Index Route 
+app.get("/codStats", async (req,res)=>{
+  try {
+    const allcodStats = await codStat.find();
+    res.render("codStats/index", { codStats: allcodStats, message: " All your Stats"});
+  } catch (err) {
+    console.log(err)
+    res.redirect("/");
+  }
+    });
+
+
+//Delete Route 
+app.delete("/codStats/:id", async (req, res) => {
+try{
+  await codStat.findByIdAndDelete(req.params.id);
+  res.redirect("/codStats");
+}catch (err) {
+  console.log(err);
+  res.redirect("/codStats");
+}
 });
