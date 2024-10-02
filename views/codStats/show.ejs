@@ -14,7 +14,9 @@
    <h2>Wins: <%=codstats.wins %></h2>
    <h2>Loses: <%=codstats.loses %></h2>
 
-
+<form method="POST" action="/codstats/<%= codstat._id%>?_method=DELETE">
+    <button type="submit"> Delete Stats </button>
+</form>
 
 
 
