@@ -1,4 +1,5 @@
 const User = require('../models/user.js');
+const getUserForm = async (req, res) => res.render("users/new") 
 
 // Create a new user
 const createUser = async (req, res) => {
@@ -25,5 +26,5 @@ const showUser = async (req, res) => {
 
 module.exports = {
   createUser,
-  showUser
+  showUser, getUserForm
 };

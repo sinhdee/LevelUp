@@ -56,7 +56,7 @@ app.get("/", (req,res) => {
 });
 
 // ========== User Routes ========== //
-app.get("/user/new", (req, res) => res.render("users/new"));
+app.get("/user/new", userController.getUserForm);
 app.post("/user", userController.createUser);
 app.get("/user/:id", userController.showUser);
 
