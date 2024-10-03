@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Details</title>
+</head>
+<body>
+    <h1>Game: <%= game.title %></h1>
+    <p>Platform: <%= game.platform %></p>
+    <p>Release Date: <%= game.releaseDate.toDateString() %></p>
+
+    <h2>Associated COD Stats</h2>
+    <ul>
+        <% game.codStats.forEach(stat => { %>
+            <li><a href="/codStats/<%= stat._id %>">View Stat: <%= stat.rank %></a></li>
+        <% }) %>
+    </ul>
+</body>
+</html>

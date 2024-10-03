@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a New Game</title>
+</head>
+<body>
+    <h1>Add a New Game</h1>
+    <form action="/games" method="POST">
+        <div>
+            <label for="title">Game Title:</label>
+            <input type="text" name="title" id="title" required>
+        </div>
+        <div>
+            <label for="platform">Platform:</label>
+            <input type="text" name="platform" id="platform" required>
+        </div>
+        <div>
+            <label for="releaseDate">Release Date:</label>
+            <input type="date" name="releaseDate" id="releaseDate">
+        </div>
+        <button type="submit">Add Game</button>
+    </form>
+</body>
+</html>
