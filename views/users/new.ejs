@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your CSS -->
+    <title>Create a New User</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Create a New User</h1>
+
+        <!-- Form to create a new user -->
+        <form action="/users" method="POST">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" required />
+            </div>
+
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required />
+            </div>
+
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required />
+                <small>(At least 6 characters)</small>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn">Create User</button>
+        </form>
+
+        <!-- Link to go back to the users list -->
+        <a href="/users" class="btn">Back to Users List</a>
+    </div>
+</body>
+</html>

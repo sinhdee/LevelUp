@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your CSS -->
     <title>COD Stat Show Page</title>
 </head>
 <body>
-   <h1>COD Show Page</h1>
-   <h2>Rank: <%=codStat.rank %></h2>   
-   <h2>Kills: <%=codStat.kills %></h2>
-   <h2>Deaths: <%=codStat.deaths %></h2>
-   <h2>Assists: <%=codStat.assists %></h2>
+    <div class="container">
+        <h1>COD Stat Details</h1>
 
-   <form method-"POST" action="/codStats/<%= codStat._id%>?_method=DELETE">
-    <button type ="submit">Submit Your Changes</button>
-   </form>
-   <section>
-    <a href="/codStats/<%= codStat._id%>/edit"> Edit Stats</a>
-   </section>
+        <!-- Display the COD stats -->
+        <h2>Rank: <%= codStat.rank %></h2>   
+        <h2>Kills: <%= codStat.kills %></h2>
+        <h2>Deaths: <%= codStat.deaths %></h2>
+        <h2>Assists: <%= codStat.assists %></h2>
+
+        <!-- Form to delete the stat -->
+        <form method="POST" action="/codStats/<%= codStat._id %>?_method=DELETE">
+            <button type="submit" class="btn delete">Delete Stat</button>
+        </form>
+
+        <!-- Link to edit the stat -->
+        <section>
+            <a href="/codStats/<%= codStat._id %>/edit" class="btn">Edit Stats</a>
+        </section>
+
+        <!-- Link to go back to the stats overview -->
+        <section>
+            <a href="/codStats" class="btn">Back to All Stats</a>
+        </section>
+    </div>
 </body>
 </html>

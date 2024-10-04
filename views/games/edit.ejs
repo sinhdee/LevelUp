@@ -3,17 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your CSS -->
+    <title>Edit Game</title>
 </head>
 <body>
-   <h1> Change your Game!</h1> 
-   <form method="POST" action="/games/<%game._id%>?_methos=PUT">
-    <div>
-        <label for="rank">Rank:</label>
-        <input type="text" name = "rank" id = "rank" value="<%= codstat.rank %>"/>
-    </div>
+    <div class="container">
+        <h1>Change Game Details</h1>
 
-    <button type="submit">Submit your Changes</button>
-   </form>
+        <!-- Form to edit game details -->
+        <form method="POST" action="/games/<%= game._id %>?_method=PUT">
+            <div>
+                <label for="title">Game Title:</label>
+                <input type="text" name="title" id="title" value="<%= game.title %>" required />
+            </div>
+
+            <div>
+                <label for="platform">Platform:</label>
+                <input type="text" name="platform" id="platform" value="<%= game.platform %>" required />
+            </div>
+
+            <div>
+                <label for="releaseDate">Release Date:</label>
+                <input type="date" name="releaseDate" id="releaseDate" value="<%= game.releaseDate ? game.releaseDate.toISOString().substr(0, 10) : '' %>" />
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn">Submit Your Changes</button>
+        </form>
+
+        <!-- Link to go back to games list -->
+        <a href="/games" class="btn">Back to Games List</a>
+    </div>
 </body>
 </html>

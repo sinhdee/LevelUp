@@ -8,24 +8,26 @@
 </head>
 <body>
     <div class="container">
+        <!-- Header section -->
         <header>
             <h1>Stats Dashboard</h1>
             <p>View and manage all your stats, users, and games!</p>
         </header>
 
-        <section class="dashboard-links">
-            <!-- Links to different sections of the app -->
+        <!-- Navigation section with links styled as buttons -->
+        <nav class="dashboard-links">
             <h2>Navigation</h2>
-            <ul>
-                <li><a href="/codStats">View All Stats</a></li>
-                <li><a href="/codStats/new">Add New Stat</a></li>
-                <li><a href="/user/new">Add New User</a></li>
-                <li><a href="/game/new">Add New Game</a></li>
-                <li><a href="/games">View All Games</a></li>
-                <li><a href="/users">View All Users</a></li>
-            </ul>
-        </section>
+            <div class="nav-grid">
+                <a href="/codStats" class="btn">View All Stats</a>
+                <a href="/codStats/new" class="btn">Add New Stat</a>
+                <a href="/user/new" class="btn">Add New User</a>
+                <a href="/game/new" class="btn">Add New Game</a>
+                <a href="/games" class="btn">View All Games</a>
+                <a href="/users" class="btn">View All Users</a>
+            </div>
+        </nav>
 
+        <!-- Footer section -->
         <footer>
             <p>&copy; 2024 LevelUp. All rights reserved.</p>
         </footer>

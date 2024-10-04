@@ -7,7 +7,7 @@ const showAllStats = async (req, res) => {
     res.render("index", { codStats: allCodStats, message: "All your Stats" });
   } catch (err) {
     console.log(err);
-    res.redirect("/");
+    res.status(500).render("error", { message: "An error occurred while fetching stats." });
   }
 };
 
@@ -22,7 +22,54 @@ const showStat = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.redirect("/");
+    res.status(500).render("error", { message: "An error occurred while fetching the stat." });
+  }
+};
+
+// Create a new stat (form rendering)
+const renderNewStatForm = (req, res) => {
+  res.render("codStats/new");
+};
+
+// Create a new stat (submission)
+const createStat = async (req, res) => {
+  try {
+    const newCodStat = new CodStat(req.body);
+    await newCodStat.save();
+    res.redirect("/codStats");
+  } catch (err) {
+    console.log(err);
+    res.status(500).render("error", { message: "An error occurred while creating the stat." });
+  }
+};
+
+// Edit a stat (form rendering)
+const renderEditStatForm = async (req, res) => {
+  try {
+    const foundCodStat = await CodStat.findById(req.params.id);
+    if (foundCodStat) {
+      res.render("codStats/edit", { codStat: foundCodStat });
+    } else {
+      res.status(404).send("Stat not found");
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).render("error", { message: "An error occurred while fetching the stat for editing." });
+  }
+};
+
+// Update specific stat
+const updateStat = async (req, res) => {
+  try {
+    const updatedCodStat = await CodStat.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (updatedCodStat) {
+      res.redirect(`/codStats/${req.params.id}`);
+    } else {
+      res.status(404).send("Stat not found");
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).render("error", { message: "An error occurred while updating the stat." });
   }
 };
 
@@ -33,12 +80,16 @@ const deleteStat = async (req, res) => {
     res.redirect("/codStats");
   } catch (err) {
     console.log(err);
-    res.redirect("/codStats");
+    res.status(500).render("error", { message: "An error occurred while deleting the stat." });
   }
 };
 
 module.exports = {
   showAllStats,
   showStat,
+  renderNewStatForm,
+  createStat,
+  renderEditStatForm,
+  updateStat,
   deleteStat
 };

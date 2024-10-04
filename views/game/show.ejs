@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your CSS -->
     <title>Game Details</title>
 </head>
 <body>
-    <h1>Game: <%= game.title %></h1>
-    <p>Platform: <%= game.platform %></p>
-    <p>Release Date: <%= game.releaseDate.toDateString() %></p>
+    <div class="container">
+        <h1>Game: <%= game.title %></h1>
+        <p><strong>Platform:</strong> <%= game.platform %></p>
 
-    <h2>Associated COD Stats</h2>
-    <ul>
-        <% game.codStats.forEach(stat => { %>
-            <li><a href="/codStats/<%= stat._id %>">View Stat: <%= stat.rank %></a></li>
-        <% }) %>
-    </ul>
+        <!-- Handle the release date display safely -->
+        <p><strong>Release Date:</strong> 
+            <%= game.releaseDate ? game.releaseDate.toDateString() : "Release date not available" %>
+        </p>
+
+        <!-- Section for associated COD stats -->
+        <h2>Associated COD Stats</h2>
+        <ul class="cod-stats-list">
+            <% game.codStats.forEach(stat => { %>
+                <li><a href="/codStats/<%= stat._id %>" class="btn">View Stat: <%= stat.rank %></a></li>
+            <% }) %>
+        </ul>
+
+        <!-- Link to go back to the games list -->
+        <a href="/games" class="btn">Back to Games List</a>
+    </div>
 </body>
 </html>

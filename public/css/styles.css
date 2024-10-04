@@ -227,3 +227,52 @@ footer a:hover {
     background-color: #32cd32;
     color: #0b0b0b;
 }
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #32cd32;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+ }
+ 
+ .btn:hover {
+    background-color: #228b22;
+ }
+ .btn.delete {
+    background-color: #ff3333;
+}
+
+.btn.delete:hover {
+    background-color: #cc0000;
+}
+
+/* Style for COD stats list */
+.cod-stats-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cod-stats-list li {
+    margin-bottom: 10px;
+}
+
+.cod-stats-list .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #32cd32;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cod-stats-list .btn:hover {
+    background-color: #228b22;
+}

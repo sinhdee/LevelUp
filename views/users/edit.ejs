@@ -3,17 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your CSS -->
+    <title>Edit User Profile</title>
 </head>
 <body>
-   <h1> Update your User Profile!</h1> 
-   <form method="POST" action="/users/<%user._id%>?_methos=PUT">
-    <div>
-        <label for="rank">Rank:</label>
-        <input type="text" name = "rank" id = "rank" value="<%= codstat.rank %>"/>
-    </div>
+    <div class="container">
+        <h1>Update Your Profile</h1>
 
-    <button type="submit">Submit your Changes</button>
-   </form>
+        <!-- Form to edit user profile -->
+        <form method="POST" action="/users/<%= user._id %>?_method=PUT">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" value="<%= user.username %>" required />
+            </div>
+
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" value="<%= user.email %>" required />
+            </div>
+
+            <div>
+                <label for="password">New Password:</label>
+                <input type="password" name="password" id="password" />
+                <small>(Leave blank if you don't want to change it)</small>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn">Submit Your Changes</button>
+        </form>
+
+        <!-- Link to go back to the user profile -->
+        <a href="/users/<%= user._id %>" class="btn">Back to Profile</a>
+    </div>
 </body>
 </html>

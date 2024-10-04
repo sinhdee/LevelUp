@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your CSS -->
+    <title>User Profile</title>
+</head>
+<body>
+    <div class="container">
+        <h1>User Profile for <%= user.username %></h1>
+        <p><strong>Email:</strong> <%= user.email %></p>
+        
+        <!-- COD Stats section -->
+        <h2>COD Stats</h2>
+        <% if (user.codStats.length > 0) { %>
+            <ul class="cod-stats-list">
+                <% user.codStats.forEach(stat => { %>
+                    <li><a href="/codStats/<%= stat._id %>" class="btn">View Stat: <%= stat.rank %></a></li>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <p>No COD stats available for this user.</p>
+        <% } %>
+
+        <!-- Navigation buttons -->
+        <a href="/users" class="btn">Back to Users List</a>
+        <a href="/users/<%= user._id %>/edit" class="btn">Edit Profile</a>
+    </div>
+</body>
+</html>
