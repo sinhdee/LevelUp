@@ -7,11 +7,16 @@
 </head>
 <body>
    <h1>COD Show Page</h1>
-   <h2>Rank: <%=codstats.rank %></h2>   
-   <h2>Kills: <%=codstats.kills %></h2>
-   <h2>Deaths: <%=codstats.deaths %></h2>
-   <h2>Assists: <%=codstats.assists %></h2>
-   <h2>Wins: <%=codstats.wins %></h2>
-   <h2>Loses: <%=codstats.loses %></h2>
+   <h2>Rank: <%=codStat.rank %></h2>   
+   <h2>Kills: <%=codStat.kills %></h2>
+   <h2>Deaths: <%=codStat.deaths %></h2>
+   <h2>Assists: <%=codStat.assists %></h2>
+
+   <form method-"POST" action="/codStats/<%= codStat._id%>?_method=DELETE">
+    <button type ="submit">Submit Your Changes</button>
+   </form>
+   <section>
+    <a href="/codStats/<%= codStat._id%>/edit"> Edit Stats</a>
+   </section>
 </body>
 </html>

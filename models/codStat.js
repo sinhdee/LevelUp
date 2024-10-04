@@ -10,6 +10,6 @@ const codStatsSchema = new mongoose.Schema({
 });
 
 // Model
-const codStat = mongoose.model('codStat', codStatsSchema);
+const codStat = mongoose.model('CodStat', codStatsSchema);
 
 module.exports = codStat;
