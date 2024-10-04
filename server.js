@@ -45,10 +45,7 @@ app.use(express.static('public'));
 //Set view engine 
 app.set('view engine', 'ejs');
 
-// Starting the Server
-app.listen(port, () => {
-  console.log(`The express app is ready on port ${port}!`);
-});
+
 
 
 // ===== ROUTES ===== //
@@ -62,17 +59,28 @@ app.get("/", (req,res) => {
 app.get("/user/new", userController.getUserForm);
 app.post("/user", userController.createUser);
 app.get("/user/:id", userController.showUser);
+app.get("/users", userController.showAllUsers);
+// Route to add new user
+app.get("/user/new", (req, res) => {
+  res.render("users/new");
+});
 
 // ========== Game Routes ========== //
 app.get("/game/new", (req, res) => res.render("games/new"));
 app.post("/game", gameController.createGame);
 app.get("/game/:id", gameController.showGame);
+app.get("/games", gameController.showAllGames);
 
 // ========== CodStat Routes ========== //
 app.get("/codStats", codStatController.showAllStats);
 app.get("/codStats/:id", codStatController.showStat);
 app.get("/codStats/new", (req, res) => res.render("codStats/new"));
 app.delete("/codStats/:id", codStatController.deleteStat);
+
+// Route to render the Stats Dashboard page
+app.get("/codStats/stat", (req, res) => {
+  res.render("codStats/stat");
+});
 
 
 
@@ -145,4 +153,9 @@ app.put("/codStats/:id", async (req, res) => {
   } catch (err) {
     res.redirect(`/codStats/${req.params.id}`);
   }
+});
+
+// Starting the Server
+app.listen(port, () => {
+  console.log(`The express app is ready on port ${port}!`);
 });

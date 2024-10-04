@@ -24,7 +24,18 @@ const showUser = async (req, res) => {
   }
 };
 
+// Function to show all users
+const showAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.render('users/index', { users });
+  } catch (err) {
+    console.log(err);
+    res.redirect('/');
+  }
+};
+
 module.exports = {
   createUser,
-  showUser, getUserForm
+  showUser, getUserForm, showAllUsers
 };
