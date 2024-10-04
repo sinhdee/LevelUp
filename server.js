@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 
 const codStat = require('./models/codStat')
+const game = require('./models/game')
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
@@ -13,6 +14,7 @@ const path = require('path');
 const userController = require('./controllers/userController');
 const gameController = require('./controllers/gameController');
 const codStatController = require('./controllers/codStatController');
+const User = require("./models/user");
 
 // set views directory and view engine
 app.set("views", path.join(__dirname, "views"));
@@ -45,10 +47,7 @@ app.use(express.static('public'));
 //Set view engine 
 app.set('view engine', 'ejs');
 
-// Starting the Server
-app.listen(port, () => {
-  console.log(`The express app is ready on port ${port}!`);
-});
+
 
 
 // ===== ROUTES ===== //
@@ -121,6 +120,7 @@ app.post("/codStats", async (req, res) => {
   }
 });
 
+
 //EDIT ROUTE 
 app.get("/codStats/:codStatId/edit", async (req,res) => {
   try {
@@ -145,4 +145,9 @@ app.put("/codStats/:id", async (req, res) => {
   } catch (err) {
     res.redirect(`/codStats/${req.params.id}`);
   }
+});
+
+// Starting the Server
+app.listen(port, () => {
+  console.log(`The express app is ready on port ${port}!`);
 });
