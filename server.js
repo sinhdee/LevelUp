@@ -39,6 +39,8 @@ app.use(methodOverride("_method"));
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
 
+app.use(express.static('public'));
+
 //Set view engine 
 app.set('view engine', 'ejs');
 
