@@ -3,6 +3,7 @@ dotenv.config();
 const express = require("express");
 const app = express();
 
+const codStat = require('./models/codStat')
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
@@ -74,29 +75,29 @@ app.get("/codStats/new", (req, res) => res.render("codStats/new"));
 app.delete("/codStats/:id", codStatController.deleteStat);
 
 
+
 //Show Route 
 app.get("/codStats/:id", async (req, res) => {
   try {
     const foundCodStat = await codStat.findById(req.params.id);
-    const contextData = { codStat: foundCodStat };
-    res.render("codStats/show", contextData);
+    res.render("codStats/show", { codStat: foundCodStat });
   } catch (err) {
     console.log(err);
     res.redirect("/");
   }
 });
 
+
 //Index Route 
 app.get("/codStats", async (req,res)=>{
   try {
-    const allcodStats = await codStat.find();
-    res.render("codStats/index", { codStats: allcodStats, message: " All your Stats"});
+    const allCodStats = await codStat.find();
+    res.render("index", { codStats: allCodStats, message: " All your Stats"});
   } catch (err) {
     console.log(err)
     res.redirect("/");
   }
-    });
-
+})
 
 //Delete Route 
 app.delete("/codStats/:id", async (req, res) => {
@@ -107,4 +108,41 @@ try{
   console.log(err);
   res.redirect("/codStats");
 }
+});
+
+//POST/Create Route 
+app.post("/codStats", async (req, res) => {
+  try {
+    req.body.winlose = req.body.winlose === "on";
+    const newCodStat = await codStat.create(req.body);
+    res.redirect(`/codStats/${newCodStat._id}`);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+//EDIT ROUTE 
+app.get("/codStats/:codStatId/edit", async (req,res) => {
+  try {
+    const codStatToEdit = await codstat.findById(req.params.codstatId);
+    res.render("codStats/edit", { codStat: codstatToEdit});
+  } catch(err) {
+    res.redirect(`/`);
+  }
+});
+
+//UPDATE ROUTE
+app.put("/codStats/:id", async (req, res) => {
+  try {
+    if (req.body.winlose === "on") {
+      req.body.winlose = true;
+    } else {
+      req.body.winlose= false;
+    }
+
+    await codStat.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.redirect(`/codStats/${req.params.id}`);
+  } catch (err) {
+    res.redirect(`/codStats/${req.params.id}`);
+  }
 });

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h1> Update your Stats!</h1> 
+   <form method="POST" action="/codstats/<%codstat._id%>?_methos=PUT">
+    <div>
+        <label for="rank">Rank:</label>
+        <input type="text" name = "rank" id = "rank" value="<%= codstat.rank %>"/>
+    </div>
+    <div>
+        <label for="kills">Kills:</label>
+        <input type="number" name = "kills" id = "kills" value="<%= codstat.kills %>"/>
+    </div>
+    <div>
+        <label for="deaths">Deaths:</label>
+        <input type="number" name = "deaths" id = "deaths" value="<%= codstat.deaths %>"/>
+    </div>
+    <div>
+        <label for="assists">Assists:</label>
+        <input type="number" name = "assists" id = "assists" value="<%= codstat.assists %>"/>
+    </div>
+    <div>
+        <label for="winlose">Did you win this game?</label>
+        <input type="checkbox" name="winlose" id="winlose" <%= codstat.winlose ?"checked" : "" %> />
+    </div>
+
+    <button type="submit">Submit your Changes</button>
+   </form>
+</body>
+</html>
