@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COD Stat Show Page</title>
+</head>
+<body>
+   <h1>COD Show Page</h1>
+   <h2>Rank: <%=codStat.rank %></h2>   
+   <h2>Kills: <%=codStat.kills %></h2>
+   <h2>Deaths: <%=codStat.deaths %></h2>
+   <h2>Assists: <%=codStat.assists %></h2>
+
+   <form method-"POST" action="/codStats/<%= codStat._id%>?_method=DELETE">
+    <button type ="submit">Submit Your Changes</button>
+   </form>
+   <section>
+    <a href="/codStats/<%= codStat._id%>/edit"> Edit Stats</a>
+   </section>
+</body>
+</html>

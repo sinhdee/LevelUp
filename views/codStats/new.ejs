@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add your Stats!</title>
+</head>
+<body>
+    <h1>Add your stats!</h1>
+    <form action="/codstats" method="POST">
+        <div>
+            <label for="rank">Rank:</label>
+            <input type="text" name="rank" id="rank" required />
+        </div>
+
+        <div>
+            <label for="kills">Kills:</label>
+            <input type="number" name="kills" id="kills" required />
+        </div>
+
+        <div>
+            <label for="deaths">Deaths:</label>
+            <input type="number" name="deaths" id="deaths" required />
+        </div>
+
+        <div>
+            <label for="assists">Assists:</label>
+            <input type="number" name="assists" id="assists" required />
+        </div>
+
+        <div>
+            <label for="winLose">Won Game:</label>
+            <input type="checkbox" name="winLose" id="winLose" value="true" />
+            <small>Check if you won the game</small>
+        </div>
+
+        <button type="submit">Add Stats</button>
+    </form>
+</body>
+</html>
