@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to CSS -->
+    <title>Game Details</title>
+    <style>
+        /* Styling for the container and buttons */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 15px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn.delete {
+            background-color: #ff6b6b;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn.delete:hover {
+            background-color: #ff4040;
+        }
+
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Game: <%= game.title %></h1>
+        <p><strong>Platform:</strong> <%= game.platform %></p>
+        
+        <!-- Handle release date safely, as some games may not have one -->
+        <p><strong>Release Date:</strong> 
+            <%= game.releaseDate ? game.releaseDate.toDateString() : "Release date not available" %>
+        </p>
+
+        <!-- Buttons for edit and delete functionality -->
+        <a href="/games/<%= game._id %>/edit" class="btn">Edit Game</a>
+
+        <form action="/games/<%= game._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this game?');">
+            <button type="submit" class="btn delete">Delete Game</button>
+        </form>
+
+        <!-- Link to go back to the games list -->
+        <a href="/games" class="btn">Back to Games List</a>
+    </div>
+</body>
+</html>

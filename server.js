@@ -2,35 +2,31 @@ const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
 const app = express();
-
-const codStat = require('./models/codStat')
-const game = require('./models/game')
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
-const path = require('path');
+const path = require("path");
 
-// Importing Controllers (Importing controller files that contain logic for handling user, game, and codStat routes.)
+// Import Models and Controllers
 const userController = require('./controllers/userController');
 const gameController = require('./controllers/gameController');
 const codStatController = require('./controllers/codStatController');
-const User = require("./models/user");
 
-// set views directory and view engine
+
+// Set views directory and view engine
 app.set("views", path.join(__dirname, "views"));
-
+app.set('view engine', 'ejs');
 
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT || 3000;
 
 // Connecting MongoDB
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI).catch(err => console.log(`Connection error: ${err}`));
 
-//MongoDB Connection Event Handlers
+// MongoDB Connection Event Handlers
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
-
 mongoose.connection.on("error", (err) => {
   console.log(err)
 })
@@ -41,110 +37,54 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
-
 app.use(express.static('public'));
 
-//Set view engine 
-app.set('view engine', 'ejs');
 
-
-
+// Middleware
+app.use(express.urlencoded({ extended: false })); // Parses form data
+app.use(methodOverride("_method")); // Overrides methods for PUT/DELETE
+app.use(morgan("dev")); // Logs HTTP requests
+app.use(express.static('public')); // Serves static files
 
 // ===== ROUTES ===== //
 
-//Landing Page 
-app.get("/", (req,res) => {
+// Landing Page
+app.get("/", (req, res) => {
   res.render("index");
 });
 
 // ========== User Routes ========== //
-app.get("/user/new", userController.getUserForm);
-app.post("/user", userController.createUser);
-app.get("/user/:id", userController.showUser);
+app.get("/users/new", userController.getUserForm);
+app.post("/users", userController.createUser);
+app.get("/users/:id", userController.showUser);
+app.get("/users", userController.showAllUsers);
+app.get("/users/:id/edit", userController.renderEditUserForm);
+app.put("/users/:id", userController.updateUser);
+app.delete("/users/:id", userController.deleteUser);
 
 // ========== Game Routes ========== //
-app.get("/game/new", (req, res) => res.render("games/new"));
-app.post("/game", gameController.createGame);
-app.get("/game/:id", gameController.showGame);
+app.get("/games/new", gameController.renderNewGameForm); // Updated
+app.post("/games", gameController.createGame);
+app.get("/games/:id/edit", gameController.renderEditGameForm);
+app.get("/games/:id", gameController.showGame);
+app.get("/games", gameController.showAllGames);
+app.put("/games/:id", gameController.updateGame);
+app.delete("/games/:id", gameController.deleteGame);
 
 // ========== CodStat Routes ========== //
 app.get("/codStats", codStatController.showAllStats);
+app.get("/codStats/new", codStatController.renderNewStatForm); // Updated
+app.post("/codStats", codStatController.createStat);
+app.get("/codStats/stat", (req, res) => res.render("codStats/stat"));
 app.get("/codStats/:id", codStatController.showStat);
-app.get("/codStats/new", (req, res) => res.render("codStats/new"));
+app.get("/codStats/:id/edit", codStatController.renderEditStatForm);
+app.put("/codStats/:id", codStatController.updateStat);
 app.delete("/codStats/:id", codStatController.deleteStat);
 
 
-
-//Show Route 
-app.get("/codStats/:id", async (req, res) => {
-  try {
-    const foundCodStat = await codStat.findById(req.params.id);
-    res.render("codStats/show", { codStat: foundCodStat });
-  } catch (err) {
-    console.log(err);
-    res.redirect("/");
-  }
-});
-
-
-//Index Route 
-app.get("/codStats", async (req,res)=>{
-  try {
-    const allCodStats = await codStat.find();
-    res.render("index", { codStats: allCodStats, message: " All your Stats"});
-  } catch (err) {
-    console.log(err)
-    res.redirect("/");
-  }
-})
-
-//Delete Route 
-app.delete("/codStats/:id", async (req, res) => {
-try{
-  await codStat.findByIdAndDelete(req.params.id);
-  res.redirect("/codStats");
-}catch (err) {
-  console.log(err);
-  res.redirect("/codStats");
-}
-});
-
-//POST/Create Route 
-app.post("/codStats", async (req, res) => {
-  try {
-    req.body.winlose = req.body.winlose === "on";
-    const newCodStat = await codStat.create(req.body);
-    res.redirect(`/codStats/${newCodStat._id}`);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-
-//EDIT ROUTE 
-app.get("/codStats/:codStatId/edit", async (req,res) => {
-  try {
-    const codStatToEdit = await codstat.findById(req.params.codstatId);
-    res.render("codStats/edit", { codStat: codstatToEdit});
-  } catch(err) {
-    res.redirect(`/`);
-  }
-});
-
-//UPDATE ROUTE
-app.put("/codStats/:id", async (req, res) => {
-  try {
-    if (req.body.winlose === "on") {
-      req.body.winlose = true;
-    } else {
-      req.body.winlose= false;
-    }
-
-    await codStat.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.redirect(`/codStats/${req.params.id}`);
-  } catch (err) {
-    res.redirect(`/codStats/${req.params.id}`);
-  }
+// Catch-all Route (404 Not Found)
+app.use((req, res) => {
+  res.status(404).render('404', { message: "Page not found" });
 });
 
 // Starting the Server
