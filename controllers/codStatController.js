@@ -4,7 +4,7 @@ const CodStat = require('../models/codStat');
 const showAllStats = async (req, res) => {
   try {
     const allCodStats = await CodStat.find();
-    res.render("index", { codStats: allCodStats, message: "All your Stats" });
+    res.render("codStats/index", { codStats: allCodStats, message: "All your Stats" });
   } catch (err) {
     console.log(err);
     res.status(500).render("error", { message: "An error occurred while fetching stats." });
