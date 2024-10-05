@@ -1,5 +1,7 @@
 const Game = require('../models/game');
 
+
+
 // Create a new game
 const createGame = async (req, res) => {
   try {
@@ -24,6 +26,27 @@ const showGame = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).render("error", { message: "An error occurred while fetching the game details." });
+  }
+};
+
+// Show all games
+const showAllGames = async (req, res) => {
+  try {
+    const games = await Game.find(); // Fixed pluralization issue
+    res.render('games/index', { games });
+  } catch (err) {
+    console.log(err);
+    res.status(500).render('error', { message: "An error occurred while fetching games." });
+  }
+};
+
+// Render the form for creating a new game
+const renderNewGameForm = (req, res) => {
+  try {
+    res.render("games/new");
+  } catch (err) {
+    console.log(err);
+    res.status(500).render("error", { message: "An error occurred while rendering the form." });
   }
 };
 
@@ -71,6 +94,8 @@ const deleteGame = async (req, res) => {
 module.exports = {
   createGame,
   showGame,
+  showAllGames,
+  renderNewGameForm,  // Added this to match `server.js` route definition
   renderEditGameForm,
   updateGame,
   deleteGame

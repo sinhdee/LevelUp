@@ -8,10 +8,10 @@ const morgan = require("morgan");
 const path = require("path");
 
 // Import Models and Controllers
-const codStat = require('./models/codStat');
 const userController = require('./controllers/userController');
 const gameController = require('./controllers/gameController');
 const codStatController = require('./controllers/codStatController');
+
 
 // Set views directory and view engine
 app.set("views", path.join(__dirname, "views"));
@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 const port = process.env.PORT || 3000;
 
 // Connecting MongoDB
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI).catch(err => console.log(`Connection error: ${err}`));
 
 // MongoDB Connection Event Handlers
 mongoose.connection.on("connected", () => {
@@ -32,10 +32,10 @@ mongoose.connection.on("error", (err) => {
 });
 
 // Middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(methodOverride("_method"));
-app.use(morgan("dev"));
-app.use(express.static('public'));
+app.use(express.urlencoded({ extended: false })); // Parses form data
+app.use(methodOverride("_method")); // Overrides methods for PUT/DELETE
+app.use(morgan("dev")); // Logs HTTP requests
+app.use(express.static('public')); // Serves static files
 
 // ===== ROUTES ===== //
 
@@ -49,22 +49,33 @@ app.get("/users/new", userController.getUserForm);
 app.post("/users", userController.createUser);
 app.get("/users/:id", userController.showUser);
 app.get("/users", userController.showAllUsers);
+app.get("/users/:id/edit", userController.renderEditUserForm);
+app.put("/users/:id", userController.updateUser);
+app.delete("/users/:id", userController.deleteUser);
 
 // ========== Game Routes ========== //
-app.get("/games/new", (req, res) => res.render("games/new"));
+app.get("/games/new", gameController.renderNewGameForm); // Updated
 app.post("/games", gameController.createGame);
+app.get("/games/:id/edit", gameController.renderEditGameForm);
 app.get("/games/:id", gameController.showGame);
 app.get("/games", gameController.showAllGames);
+app.put("/games/:id", gameController.updateGame);
+app.delete("/games/:id", gameController.deleteGame);
 
 // ========== CodStat Routes ========== //
 app.get("/codStats", codStatController.showAllStats);
-app.get("/codStats/new", (req, res) => res.render("codStats/new"));
+app.get("/codStats/new", codStatController.renderNewStatForm); // Updated
 app.post("/codStats", codStatController.createStat);
 app.get("/codStats/stat", (req, res) => res.render("codStats/stat"));
 app.get("/codStats/:id", codStatController.showStat);
 app.get("/codStats/:id/edit", codStatController.renderEditStatForm);
 app.put("/codStats/:id", codStatController.updateStat);
 app.delete("/codStats/:id", codStatController.deleteStat);
+
+// Catch-all Route (404 Not Found)
+app.use((req, res) => {
+  res.status(404).render('404', { message: "Page not found" });
+});
 
 // Starting the Server
 app.listen(port, () => {

@@ -5,7 +5,8 @@ const codStatsSchema = new mongoose.Schema({
     kills: { 
         type: Number, 
         required: true, 
-        min: [0, 'Kills must be a positive number']  // Validation: non-negative number
+        min: [0, 'Kills must be a positive number'],  // Validation: non-negative number
+        max: [1000, 'Kills cannot exceed 1000'] // Example max validation
     },
     deaths: { 
         type: Number, 
@@ -14,11 +15,13 @@ const codStatsSchema = new mongoose.Schema({
     assists: { 
         type: Number, 
         required: true, 
-        min: [0, 'Assists must be a positive number']  // Validation: non-negative number
+        min: [0, 'Assists must be a positive number'],  // Validation: non-negative number
+        max: [500, 'Assists cannot exceed 500'] // Example max validation
     },
     winLose: { 
         type: Boolean, 
-        required: true 
+        required: true, 
+        default: false // Default value for boolean field
     },
     rank: { 
         type: String, 

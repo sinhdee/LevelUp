@@ -3,8 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your CSS -->
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to CSS -->
     <title>Add a New Game</title>
+    <style>
+        /* Styling for the form and buttons */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form div {
+            margin: 15px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn.back {
+            background-color: #555;
+        }
+
+        .btn.back:hover {
+            background-color: #333;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -14,12 +73,12 @@
         <form action="/games" method="POST">
             <div>
                 <label for="title">Game Title:</label>
-                <input type="text" name="title" id="title" required />
+                <input type="text" name="title" id="title" placeholder="Enter game title" required />
             </div>
 
             <div>
                 <label for="platform">Platform:</label>
-                <input type="text" name="platform" id="platform" required />
+                <input type="text" name="platform" id="platform" placeholder="Enter platform (e.g. PC, Xbox, PS4)" required />
             </div>
 
             <div>
@@ -33,7 +92,7 @@
         </form>
 
         <!-- Link to go back to games list -->
-        <a href="/games" class="btn">Back to Games List</a>
+        <a href="/games" class="btn back">Back to Games List</a>
     </div>
 </body>
 </html>

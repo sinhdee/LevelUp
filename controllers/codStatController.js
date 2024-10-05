@@ -18,7 +18,7 @@ const showStat = async (req, res) => {
     if (foundCodStat) {
       res.render("codStats/show", { codStat: foundCodStat });
     } else {
-      res.status(404).send("Stat not found");
+      res.status(404).render("error", { message: "Stat not found" });
     }
   } catch (err) {
     console.log(err);
@@ -28,7 +28,12 @@ const showStat = async (req, res) => {
 
 // Create a new stat (form rendering)
 const renderNewStatForm = (req, res) => {
-  res.render("codStats/new");
+  try {
+    res.render("codStats/new");
+  } catch (err) {
+    console.log(err);
+    res.status(500).render("error", { message: "An error occurred while rendering the form." });
+  }
 };
 
 // Create a new stat (submission)
@@ -50,7 +55,7 @@ const renderEditStatForm = async (req, res) => {
     if (foundCodStat) {
       res.render("codStats/edit", { codStat: foundCodStat });
     } else {
-      res.status(404).send("Stat not found");
+      res.status(404).render("error", { message: "Stat not found" });
     }
   } catch (err) {
     console.log(err);
@@ -65,7 +70,7 @@ const updateStat = async (req, res) => {
     if (updatedCodStat) {
       res.redirect(`/codStats/${req.params.id}`);
     } else {
-      res.status(404).send("Stat not found");
+      res.status(404).render("error", { message: "Stat not found" });
     }
   } catch (err) {
     console.log(err);

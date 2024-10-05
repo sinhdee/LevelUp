@@ -4,38 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Your COD Stats</title>
-    <link rel="stylesheet" href="/css/styles.css"> <!-- Ensure your CSS file is linked -->
+    <link rel="stylesheet" href="/css/styles.css"> <!-- CSS file is linked -->
+    <style>
+        /* Inline styling for the form */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form div {
+            margin: 15px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="checkbox"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #ff6b6b;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #ff4040;
+        }
+
+        .btn.clear {
+            background-color: #bbb;
+        }
+
+        .btn.clear:hover {
+            background-color: #888;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Update your Stats!</h1>
 
         <!-- Form to update stats, uses the PUT method for updates -->
-        <form method="POST" action="/codstats/<%= codstat._id %>?_method=PUT">
+        <form method="POST" action="/codstats/<%= codstat._id %>?_method=PUT" onsubmit="return confirm('Are you sure you want to update your stats?');">
             <div>
                 <label for="rank">Rank:</label>
-                <input type="text" name="rank" id="rank" value="<%= codstat.rank %>" required/>
+                <input type="text" name="rank" id="rank" value="<%= codstat.rank %>" required />
             </div>
             <div>
                 <label for="kills">Kills:</label>
-                <input type="number" name="kills" id="kills" value="<%= codstat.kills %>" required/>
+                <input type="number" name="kills" id="kills" value="<%= codstat.kills %>" required />
             </div>
             <div>
                 <label for="deaths">Deaths:</label>
-                <input type="number" name="deaths" id="deaths" value="<%= codstat.deaths %>" required/>
+                <input type="number" name="deaths" id="deaths" value="<%= codstat.deaths %>" required />
             </div>
             <div>
                 <label for="assists">Assists:</label>
-                <input type="number" name="assists" id="assists" value="<%= codstat.assists %>" required/>
+                <input type="number" name="assists" id="assists" value="<%= codstat.assists %>" required />
             </div>
             <div>
-                <label for="winlose">Did you win this game?</label>
-                <input type="checkbox" name="winlose" id="winlose" <%= codstat.winlose ? "checked" : "" %> />
+                <label for="winLose">Did you win this game?</label>
+                <input type="checkbox" name="winLose" id="winLose" <%= codstat.winLose ? "checked" : "" %> />
             </div>
 
             <!-- Submit button -->
-            <button type="submit">Submit your Changes</button>
+            <button type="submit" class="btn">Submit your Changes</button>
         </form>
+
+        <!-- Optional Reset button -->
+        <button type="reset" class="btn clear">Clear Form</button>
     </div>
 </body>
 </html>

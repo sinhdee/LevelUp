@@ -3,25 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your stylesheet -->
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to stylesheet -->
     <title>LevelUp: Check Your Stats</title>
+    <style>
+        /* Example inline styling for buttons and container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #ff6b6b;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #ff4040;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+    </style>
 </head>
 <body>
-    <!-- Main container for page content -->
     <div class="container">
         <!-- Header section -->
         <header>
             <h1>Check Out Your Stats!</h1>
-            <p>"Some catchy slogan about leveling up your gaming stats!"</p>
+            <p>"Level up your gaming with accurate tracking."</p>
         </header>
 
         <!-- Navigation section with buttons linking to various stats pages -->
         <section class="stats-navigation">
-            <!-- Link to see all stats (overview page) -->
-            <a href="/codStats" class="btn">See All Your Stats Here!</a>
-
-            <!-- Link to add new stats -->
             <a href="/codStats/new" class="btn">Add Your Stats Here!</a>
+        </section>
+
+        <!-- Display List of Stats -->
+        <section class="stats-list">
+            <h2>Your Gaming Stats</h2>
+            <!-- Conditionally render stats if available -->
+            <% if (codStats.length > 0) { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Kills</th>
+                            <th>Deaths</th>
+                            <th>Assists</th>
+                            <th>Win/Lose</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loop through codStats array and display each stat -->
+                        <% codStats.forEach(stat => { %>
+                            <tr>
+                                <td><%= stat.rank %></td>
+                                <td><%= stat.kills %></td>
+                                <td><%= stat.deaths %></td>
+                                <td><%= stat.assists %></td>
+                                <td><%= stat.winLose ? 'Win' : 'Lose' %></td>
+                                <td>
+                                    <a href="/codStats/<%= stat._id %>" class="btn">View</a>
+                                    <a href="/codStats/<%= stat._id %>/edit" class="btn">Edit</a>
+                                    <form action="/codStats/<%= stat._id %>?_method=DELETE" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>No stats available yet. Add your first stat now!</p>
+            <% } %>
         </section>
 
         <!-- Footer section -->

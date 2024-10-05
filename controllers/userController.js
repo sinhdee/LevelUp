@@ -1,7 +1,14 @@
 const User = require('../models/user.js');
 
 // Render the form for creating a new user
-const getUserForm = async (req, res) => res.render("users/new");
+const getUserForm = async (req, res) => {
+  try {
+    res.render("users/new");
+  } catch (err) {
+    console.log("Error in getUserForm:", err);
+    res.status(500).render('error', { message: "An error occurred while rendering the form." });
+  }
+};
 
 // Create a new user
 const createUser = async (req, res) => {
@@ -10,7 +17,7 @@ const createUser = async (req, res) => {
     await newUser.save();
     res.redirect(`/users/${newUser._id}`);
   } catch (err) {
-    console.log(err);
+    console.log("Error in createUser:", err);
     res.status(500).render('error', { message: "An error occurred while creating the user." });
   }
 };
@@ -25,7 +32,7 @@ const showUser = async (req, res) => {
       res.status(404).render('error', { message: "User not found." });
     }
   } catch (err) {
-    console.log(err);
+    console.log("Error in showUser:", err);
     res.status(500).render('error', { message: "An error occurred while fetching the user details." });
   }
 };
@@ -36,7 +43,7 @@ const showAllUsers = async (req, res) => {
     const users = await User.find();
     res.render('users/index', { users });
   } catch (err) {
-    console.log(err);
+    console.log("Error in showAllUsers:", err);
     res.status(500).render('error', { message: "An error occurred while fetching users." });
   }
 };
@@ -51,7 +58,7 @@ const renderEditUserForm = async (req, res) => {
       res.status(404).render('error', { message: "User not found." });
     }
   } catch (err) {
-    console.log(err);
+    console.log("Error in renderEditUserForm:", err);
     res.status(500).render('error', { message: "An error occurred while fetching the user for editing." });
   }
 };
@@ -66,7 +73,7 @@ const updateUser = async (req, res) => {
       res.status(404).render('error', { message: "User not found." });
     }
   } catch (err) {
-    console.log(err);
+    console.log("Error in updateUser:", err);
     res.status(500).render('error', { message: "An error occurred while updating the user." });
   }
 };
@@ -77,7 +84,7 @@ const deleteUser = async (req, res) => {
     await User.findByIdAndDelete(req.params.id);
     res.redirect('/users');
   } catch (err) {
-    console.log(err);
+    console.log("Error in deleteUser:", err);
     res.status(500).render('error', { message: "An error occurred while deleting the user." });
   }
 };

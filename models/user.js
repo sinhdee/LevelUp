@@ -14,11 +14,19 @@ const userSchema = new mongoose.Schema({
     required: true, 
     unique: true, 
     trim: true,  // Trim spaces from the email
-    match: [/.+@.+\..+/, 'Please enter a valid email address']  // Simple email validation
+    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please enter a valid email address']  // Improved email validation
   },
   password: { 
     type: String, 
-    required: true 
+    required: true,
+    minlength: [8, 'Password must be at least 8 characters long'],  // Enforce minimum length
+    validate: {
+      validator: function(value) {
+        // Example rule: Password must have at least one number and one special character
+        return /[0-9]/.test(value) && /[!@#$%^&*]/.test(value);
+      },
+      message: 'Password must contain at least one number and one special character'
+    }
   }, // We will hash this before saving
   codStats: [{ 
     type: mongoose.Schema.Types.ObjectId, 
@@ -37,6 +45,7 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (err) {
+    console.error("Error hashing password:", err);
     return next(err);
   }
 });
