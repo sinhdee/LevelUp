@@ -3,10 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Index Page</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to stylesheet -->
+    <title>Games List</title>
+    <style>
+        /* Styling for the games list */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .actions {
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>See Your Game </h1>
-    
+    <div class="container">
+        <h1>Games List</h1>
+
+        <!-- Link to add a new game -->
+        <a href="/games/new" class="btn">Add a New Game</a>
+
+        <!-- Display a list of games dynamically -->
+        <ul>
+            <% games.forEach(game => { %>
+                <li>
+                    <strong><%= game.title %> - <%= game.platform %></strong>
+                    <!-- Links for viewing, editing, and deleting games -->
+                    <div class="actions">
+                        <a href="/games/<%= game._id %>" class="btn">View</a>
+                        <a href="/games/<%= game._id %>/edit" class="btn">Edit</a>
+                        <form action="/games/<%= game._id %>?_method=DELETE" method="POST" style="display:inline;">
+                            <button type="submit" class="btn delete">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 LevelUp. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>

@@ -3,9 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Index Page</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to CSS -->
+    <title>Users List</title>
+    <style>
+        /* Styling for the container and users list */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .actions {
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>User Information</h1>
+
+        <!-- Link to add a new user -->
+        <a href="/users/new" class="btn">Add New User</a>
+
+        <!-- Display a list of users dynamically -->
+        <ul>
+            <% users.forEach(user => { %>
+                <li>
+                    <strong><%= user.username %> - <%= user.email %></strong>
+                    <!-- Links for viewing, editing, and deleting users -->
+                    <div class="actions">
+                        <a href="/users/<%= user._id %>" class="btn">View</a>
+                        <a href="/users/<%= user._id %>/edit" class="btn">Edit</a>
+                        <form action="/users/<%= user._id %>?_method=DELETE" method="POST" style="display:inline;">
+                            <button type="submit" class="btn delete">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 LevelUp. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
