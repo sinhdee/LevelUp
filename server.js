@@ -28,8 +28,17 @@ mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 mongoose.connection.on("error", (err) => {
-  console.log(err);
-});
+  console.log(err)
+})
+
+// Middleware to parse URL-encoded data from forms
+app.use(express.urlencoded({ extended: false }));
+// Middleware for using HTTP verbs such as PUT or DELETE
+app.use(methodOverride("_method"));
+// Morgan for logging HTTP requests
+app.use(morgan('dev'));
+app.use(express.static('public'));
+
 
 // Middleware
 app.use(express.urlencoded({ extended: false })); // Parses form data
@@ -71,6 +80,7 @@ app.get("/codStats/:id", codStatController.showStat);
 app.get("/codStats/:id/edit", codStatController.renderEditStatForm);
 app.put("/codStats/:id", codStatController.updateStat);
 app.delete("/codStats/:id", codStatController.deleteStat);
+
 
 // Catch-all Route (404 Not Found)
 app.use((req, res) => {
