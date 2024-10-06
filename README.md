@@ -3,7 +3,7 @@
 
 LevelUp is an app that tracks your stats so you can analyze your performance! From seeing your KDA average to seeing your Win/Lose Percentage. LevelUp keeps track of all of those important stats all in one convient app!
 
-Deploment link: 
+Deploment link: https://level-up-cod-b83a0036ca8a.herokuapp.com/codStats/stat
 
 Technologies used:
 - Javascript 
