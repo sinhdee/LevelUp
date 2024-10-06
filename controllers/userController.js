@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
     await newUser.save();
     res.redirect(`/users/${newUser._id}`);
   } catch (err) {
-    console.log("Error in createUser:", err);
+    console.log(err);
     res.status(500).render('error', { message: "An error occurred while creating the user." });
   }
 };
