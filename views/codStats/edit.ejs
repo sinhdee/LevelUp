@@ -94,13 +94,15 @@
                 <input type="number" name="assists" id="assists" value="<%= codstat.assists %>" required />
             </div>
             <div>
-                <label for="winLose">Did you win this game?</label>
-                <input type="checkbox" name="winLose" id="winLose" <%= codstat.winLose ? "checked" : "" %> />
+                <label for="winlose">Did you win this game?</label>
+                <input type="hidden" name="winLose" value="false"> <!-- Hidden input for unchecked state -->
+                <input type="checkbox" name="winLose" id="winLose" value="true" <%= codstat.winLose ? "checked" : "" %> />
             </div>
 
             <!-- Submit button -->
             <button type="submit" class="btn">Submit your Changes</button>
         </form>
+        <a href="/" class="btn">Home</a> <!-- Home button -->
 
         <!-- Optional Reset button -->
         <button type="reset" class="btn clear">Clear Form</button>

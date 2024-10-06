@@ -39,6 +39,8 @@ const renderNewStatForm = (req, res) => {
 // Create a new stat (submission)
 const createStat = async (req, res) => {
   try {
+    // Ensure that the winLose value is properly cast to a boolean
+    req.body.winLose = req.body.winLose === 'true'; // Convert string to boolean
     const newCodStat = new CodStat(req.body);
     await newCodStat.save();
     res.redirect("/codStats");
@@ -66,12 +68,10 @@ const renderEditStatForm = async (req, res) => {
 // Update specific stat
 const updateStat = async (req, res) => {
   try {
+    // Ensure that the winLose value is properly cast to a boolean
+    req.body.winLose = req.body.winLose === 'true'; // Convert string to boolean
     const updatedCodStat = await CodStat.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (updatedCodStat) {
-      res.redirect(`/codStats/${req.params.id}`);
-    } else {
-      res.status(404).render("error", { message: "Stat not found" });
-    }
+    res.redirect(`/codStats/${req.params.id}`);
   } catch (err) {
     console.log(err);
     res.status(500).render("error", { message: "An error occurred while updating the stat." });
